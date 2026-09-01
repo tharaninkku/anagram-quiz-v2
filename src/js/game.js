@@ -11,6 +11,7 @@ const playerInput = document.getElementById("playerInput");
 const score = document.getElementById("scoreNumber");
 let randomWord;
 let currentScore = 0;
+let lastWord;
 
 // use for get a random word from an array 
 function getRandomWord() {
@@ -24,13 +25,19 @@ function shuffle(array) {
 		const j = Math.floor(Math.random() * (i + 1));
 		[array[i], array[j]] = [array[j], array[i]];
 	}
-	return array;
+	return array.join("");
 }  
 
 //this function use getRandomWord and shuffle
 function generateWord() {
-	const shuffledWord = shuffle(getRandomWord().split(""));
-	result.textContent = shuffledWord.join("");	
+	const selectedWord = getRandomWord();
+	let shuffledWord = shuffle(selectedWord.split(""));
+	
+	while (shuffledWord === selectedWord) {
+		shuffledWord = shuffle(selectedWord.split(""));
+	}
+
+	result.textContent = shuffledWord;
 }
 
 random.addEventListener("click", () => {
