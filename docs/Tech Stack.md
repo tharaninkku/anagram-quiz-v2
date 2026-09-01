@@ -10,7 +10,7 @@ Get random word
 -Express
 -Server controls game rules
 
-Stor score
+Store score
 -database
 -Postgresql
 -must persist

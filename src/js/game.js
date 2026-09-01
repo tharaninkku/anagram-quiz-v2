@@ -13,7 +13,7 @@ let randomWord;
 let currentScore = 0;
 
 // use for get a random word from an array 
-function getRandomWord(array) {
+function getRandomWord() {
 	randomWord = words[Math.floor(Math.random() * words.length)];
 	return randomWord;
 }
@@ -28,13 +28,13 @@ function getShuffle(array) {
 }  
 
 //this function use getRandomWord and getShuffle
-function getGenerateWord() {
+function generateWord() {
 	const shuffledWord = getShuffle(getRandomWord(words).split(""));
 	result.textContent = shuffledWord.join("");	
 }
 
 random.addEventListener("click", () => {
-	getGenerateWord();
+	generateWord();
 });
 
 playerInput.addEventListener("keydown", (event) => {
@@ -44,7 +44,7 @@ playerInput.addEventListener("keydown", (event) => {
 		currentScore ++;
 		score.textContent = currentScore;
 		playerInput.value = "";
-		getGenerateWord();	
+		generateWord();	
 	} else {
 		check.textContent = "Wrong!! Your score is reset";
 		currentScore = 0;
