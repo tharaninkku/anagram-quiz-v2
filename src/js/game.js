@@ -11,7 +11,6 @@ const playerInput = document.getElementById("playerInput");
 const score = document.getElementById("scoreNumber");
 let randomWord;
 let currentScore = 0;
-let lastWord;
 
 // use for get a random word from an array 
 function getRandomWord() {
@@ -32,7 +31,7 @@ function shuffle(array) {
 function generateWord() {
 	const selectedWord = getRandomWord();
 	let shuffledWord = shuffle(selectedWord.split(""));
-	
+
 	while (shuffledWord === selectedWord) {
 		shuffledWord = shuffle(selectedWord.split(""));
 	}
@@ -48,7 +47,7 @@ playerInput.addEventListener("keydown", (event) => {
 	if (event.key === "Enter") {
 		if (playerInput.value === randomWord) {
 		check.textContent = "Correct!";
-		currentScore ++;
+		currentScore++;
 		score.textContent = currentScore;
 		playerInput.value = "";
 		generateWord();	
