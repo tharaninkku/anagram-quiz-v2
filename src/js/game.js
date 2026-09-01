@@ -19,7 +19,7 @@ function getRandomWord() {
 }
 
 // use for shuffle a word
-function getShuffle(array) {
+function shuffle(array) {
 	for (let i = array.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
 		[array[i], array[j]] = [array[j], array[i]];
@@ -27,9 +27,9 @@ function getShuffle(array) {
 	return array;
 }  
 
-//this function use getRandomWord and getShuffle
+//this function use getRandomWord and shuffle
 function generateWord() {
-	const shuffledWord = getShuffle(getRandomWord(words).split(""));
+	const shuffledWord = shuffle(getRandomWord().split(""));
 	result.textContent = shuffledWord.join("");	
 }
 
