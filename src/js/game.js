@@ -9,8 +9,11 @@ const result = document.getElementById("randomResult");
 const check = document.getElementById("resultText");
 const playerInput = document.getElementById("playerInput");
 const score = document.getElementById("scoreNumber");
+const lives = document.getElementById("playerLives");
+
 let randomWord;
 let currentScore = 0;
+let currentLive = 3;
 
 // use for get a random word from an array 
 function getRandomWord() {
@@ -45,16 +48,35 @@ random.addEventListener("click", () => {
 
 playerInput.addEventListener("keydown", (event) => {
 	if (event.key === "Enter") {
-		if (playerInput.value === randomWord) {
+
+		if (!randomWord) {
+			check.textContent = "Click random button first!"
+			return;
+		}
+
+		if (playerInput.value.trim().toLowerCase() === randomWord.toLowerCase()) {
 		check.textContent = "Correct!";
 		currentScore++;
 		score.textContent = currentScore;
+		lives.textContent = "❤️".repeat(currentLive);
 		playerInput.value = "";
 		generateWord();	
-	} else {
-		check.textContent = "Wrong!! Your score is reset";
-		currentScore = 0;
-		score.textContent = currentScore;
+		} else {
+			currentLive--;
+
+			if (currentLive <= 0) {
+				currentScore = 0;
+				currentLive = 3;
+				check.textContent = "Wrong!! Game Over! Your score is reset.";
+				lives.textContent = "❤️".repeat(currentLive);
+				score.textContent = currentScore;
+			} else {
+				check.textContent = "Wrong!! You lost one life";
+				lives.textContent = "❤️".repeat(currentLive);
+				score.textContent = currentScore;
+			}
+
+
 		}	
 	}
 
