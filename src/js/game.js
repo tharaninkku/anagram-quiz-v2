@@ -10,10 +10,22 @@ const check = document.getElementById("resultText");
 const playerInput = document.getElementById("playerInput");
 const score = document.getElementById("scoreNumber");
 const lives = document.getElementById("playerLives");
+const gameOverScreen = document.getElementById("gameOverScreen");
+const finalScore = document.getElementById("finalScore");
+const restartButton = document.getElementById("restartButton");
 
 let randomWord;
 let currentScore = 0;
 let currentLive = 3;
+
+// use to restart the game
+function restartGame() {
+	gameOverScreen.hidden = false;
+	finalScore.textContent = currentScore;
+
+	playerInput.disabled = true;
+	random.disabled = true;	
+}
 
 // use for get a random word from an array 
 function getRandomWord() {
@@ -63,13 +75,11 @@ playerInput.addEventListener("keydown", (event) => {
 		generateWord();	
 		} else {
 			currentLive--;
+			lives.textContent = "❤️".repeat(currentLive);
 
 			if (currentLive <= 0) {
-				currentScore = 0;
-				currentLive = 3;
-				check.textContent = "Wrong!! Game Over! Your score is reset.";
-				lives.textContent = "❤️".repeat(currentLive);
-				score.textContent = currentScore;
+				check.textContent = "Wrong!!";
+				restartGame();
 			} else {
 				check.textContent = "Wrong!! You lost one life";
 				lives.textContent = "❤️".repeat(currentLive);
@@ -80,6 +90,18 @@ playerInput.addEventListener("keydown", (event) => {
 		}	
 	}
 
+});
+
+restartButton.addEventListener("click", () => {
+	gameOverScreen.hidden = true;
+	playerInput.disabled = false;
+	random.disabled = false;
+
+	currentScore = 0;
+	currentLive = 3;
+
+	lives.textContent = "❤️".repeat(currentLive);
+	score.textContent = currentScore;
 });
 
 
