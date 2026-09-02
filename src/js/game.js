@@ -13,13 +13,47 @@ const lives = document.getElementById("playerLives");
 const gameOverScreen = document.getElementById("gameOverScreen");
 const finalScore = document.getElementById("finalScore");
 const restartButton = document.getElementById("restartButton");
+const timer = document.getElementById("timer");
+const timeLeftText = document.getElementById("timeLeft");
 
 let randomWord;
 let currentScore = 0;
 let currentLive = 3;
+let countdown;
 
-// use to restart the game
-function restartGame() {
+function startTimer() {
+	clearInterval(countdown);
+	timer.hidden = false;
+
+	let timeLeft = 10;
+	timeLeftText.textContent = timeLeft;
+
+	countdown = setInterval(() => {
+		timeLeft--;
+		console.log(timeLeft); 
+		timeLeftText.textContent = timeLeft;
+
+		if (timeLeft <= 0) {
+			clearInterval(countdown);
+			timer.hidden = true;
+			currentLive--;
+			lives.textContent = "❤️".repeat(currentLive);
+
+			if (currentLive <= 0) {
+				gameOver();
+			} else {
+				check.textContent = "Timeout!";
+				playerInput.value = "";
+				generateWord();
+			}
+		}
+	}, 1000);
+}
+
+// use to end the game
+function gameOver() {
+	clearInterval(countdown);
+
 	gameOverScreen.hidden = false;
 	finalScore.textContent = currentScore;
 
@@ -52,10 +86,12 @@ function generateWord() {
 	}
 
 	result.textContent = shuffledWord;
+	startTimer();
 }
 
 random.addEventListener("click", () => {
 	generateWord();
+	random.disabled = true;
 });
 
 playerInput.addEventListener("keydown", (event) => {
@@ -79,14 +115,11 @@ playerInput.addEventListener("keydown", (event) => {
 
 			if (currentLive <= 0) {
 				check.textContent = "Wrong!!";
-				restartGame();
+				gameOver();
 			} else {
 				check.textContent = "Wrong!! You lost one life";
 				lives.textContent = "❤️".repeat(currentLive);
-				score.textContent = currentScore;
 			}
-
-
 		}	
 	}
 
@@ -99,6 +132,13 @@ restartButton.addEventListener("click", () => {
 
 	currentScore = 0;
 	currentLive = 3;
+
+    randomWord = undefined;
+
+    playerInput.value = "";
+    result.textContent = "none";
+    check.textContent = "not answered yet";
+    timer.hidden = true;
 
 	lives.textContent = "❤️".repeat(currentLive);
 	score.textContent = currentScore;
