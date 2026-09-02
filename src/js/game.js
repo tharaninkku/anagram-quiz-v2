@@ -15,11 +15,27 @@ const finalScore = document.getElementById("finalScore");
 const restartButton = document.getElementById("restartButton");
 const timer = document.getElementById("timer");
 const timeLeftText = document.getElementById("timeLeft");
+const streak = document.getElementById("streakFireball");
 
 let randomWord;
 let currentScore = 0;
 let currentLive = 3;
 let countdown;
+let streakLevel = 0;
+let streakCount = 0;
+
+function updateStreak() {
+	if (streakCount >= 30) {
+		streakLevel = 3;
+	} else if (streakCount >= 20) {
+		streakLevel = 2;
+	} else if (streakCount >= 10) {
+		streakLevel = 1;
+	} else {
+		streakLevel = 0;
+	}
+	streak.textContent = "🔥".repeat(streakLevel);
+}
 
 function startTimer() {
 	clearInterval(countdown);
@@ -38,6 +54,8 @@ function startTimer() {
 			timer.hidden = true;
 			currentLive--;
 			lives.textContent = "❤️".repeat(currentLive);
+			streakCount = 0;
+			updateStreak();
 
 			if (currentLive <= 0) {
 				gameOver();
@@ -104,13 +122,18 @@ playerInput.addEventListener("keydown", (event) => {
 
 		if (playerInput.value.trim().toLowerCase() === randomWord.toLowerCase()) {
 		check.textContent = "Correct!";
+		streakCount++;		
+		updateStreak();
 		currentScore++;
+		currentScore += streakLevel;
 		score.textContent = currentScore;
 		lives.textContent = "❤️".repeat(currentLive);
 		playerInput.value = "";
 		generateWord();	
 		} else {
 			currentLive--;
+			streakCount = 0;
+			updateStreak();
 			lives.textContent = "❤️".repeat(currentLive);
 
 			if (currentLive <= 0) {
@@ -118,7 +141,6 @@ playerInput.addEventListener("keydown", (event) => {
 				gameOver();
 			} else {
 				check.textContent = "Wrong!! You lost one life";
-				lives.textContent = "❤️".repeat(currentLive);
 			}
 		}	
 	}
@@ -132,7 +154,8 @@ restartButton.addEventListener("click", () => {
 
 	currentScore = 0;
 	currentLive = 3;
-
+	streakCount = 0;
+	updateStreak();	
     randomWord = undefined;
 
     playerInput.value = "";
