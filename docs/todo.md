@@ -7,10 +7,13 @@ Here’s the todo list I’d use from where your game is now:
 
 <!-- Prevent repeating the same word twice in a row. ** Since we will have morthan 10K words, I think this is not necessary.-->
 
-- Add a timer — either per word or for the whole game.
+<!--  Add a timer — either per word or for the whole game. -->
 
-- Add a streak system — optional bonus for consecutive correct answers.
+<!--  Add a streak system — optional bonus for consecutive correct answers. -->
+
 - Expand the word list and later move it into a separate file/module.
+
+
 - Improve input behavior — auto-focus input, Enter to submit, ignore spaces/case.
 - Improve UI feedback — different styling for correct/wrong/game over.
 - Add basic responsive CSS so it looks decent on laptop and phone.
